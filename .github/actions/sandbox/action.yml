@@ -1,0 +1,35 @@
+name: "Sandbox"
+description: "Sandbox Test"
+branding:
+  icon: "zap"
+  color: "gray-dark"
+inputs:
+  file-content:
+    description: File contents
+runs:
+  using: "composite"
+  steps:
+    - name: Configure Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.nitro/cache/*
+        key: ${{ runner.os }}-nitro-cache-${{ hashFiles('~/.nitro/cache/*') }}
+        restore-keys: ${{ runner.os }}-nitro-cache-
+    - name: Sample Script
+      shell: bash
+      run: |
+        set -ex
+
+        # create folder if not exists
+        mkdir -p ~/.nitro/cache >/dev/null 2>&1
+
+        # list cache folder
+        echo "$(ls ~/.nitro/cache)"
+
+        # echo contents
+        echo "file content: ${FILE_CONTENT}"
+
+        file="~/.nitro/cache/$("${FILE_CONTENT}" | md5sum | awk '{print $1}').txt"        
+        echo "writing to: ${file}"
+        echo "${FILE_CONTENT}" > $file
