@@ -348,4 +348,4 @@ runs:
         echo "$(cat ~/.nitro/cache/hello.txt)"
 
         mkdir -p ~/.nitro/cache >/dev/null 2>&1
-        echo "hello" > ~/.nitro/cache/hello.txt
+        echo "hello2" > ~/.nitro/cache/hello.txt
