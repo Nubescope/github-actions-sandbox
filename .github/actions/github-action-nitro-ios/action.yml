@@ -219,12 +219,12 @@ runs:
           exit 1
         fi
 
-        if [[ -n "${{ inputs.ios-certificate-base64 }}" ]]; then
-          echo -n "${{ inputs.ios-certificate-base64 }}" | base64 --decode --output "${RUNNER_TEMP}/certificate.p12"
-          args+=("--ios-certificate-url" "file://${RUNNER_TEMP}/certificate.p12")
-        else
-          args+=("--ios-certificate-url" "${{ inputs.ios-certificate-url }}")
-        fi
+        # if [[ -n "${{ inputs.ios-certificate-base64 }}" ]]; then
+        #   echo -n "${{ inputs.ios-certificate-base64 }}" | base64 --decode --output "${RUNNER_TEMP}/certificate.p12"
+        #   args+=("--ios-certificate-url" "file://${RUNNER_TEMP}/certificate.p12")
+        # else
+        #   args+=("--ios-certificate-url" "${{ inputs.ios-certificate-url }}")
+        # fi
 
         if [[ -n "${{ inputs.ios-certificate-passphrase }}" ]]; then
           args+=("--ios-certificate-passphrase" "${{ inputs.ios-certificate-passphrase }}")
@@ -244,18 +244,18 @@ runs:
           exit 1
         fi
 
-        if [[ -n "${{ inputs.ios-provisioning-profile-urls }}" ]]; then
-          IFS='|' ios_provisioning_profile_urls_array=("${{ inputs.ios-provisioning-profile-urls }}")
-        else
-          IFS='|' ios_provisioning_profiles_base64_array=("${{ inputs.ios-provisioning-profiles-base64 }}")
+        # if [[ -n "${{ inputs.ios-provisioning-profile-urls }}" ]]; then
+        #   IFS='|' ios_provisioning_profile_urls_array=("${{ inputs.ios-provisioning-profile-urls }}")
+        # else
+        #   IFS='|' ios_provisioning_profiles_base64_array=("${{ inputs.ios-provisioning-profiles-base64 }}")
 
-          for i in "${!ios_provisioning_profiles_base64_array[@]}"
-          do
-              provisioning_profile_base64=${ios_provisioning_profiles_base64_array[$i]}
-              echo -n "${provisioning_profile_base64}" | base64 --decode --output "${RUNNER_TEMP}/${i}.mobileprovision"
-              ios_provisioning_profile_urls_array+=("file://${RUNNER_TEMP}/${i}.mobileprovision")
-          done
-        fi
+        #   for i in "${!ios_provisioning_profiles_base64_array[@]}"
+        #   do
+        #       provisioning_profile_base64=${ios_provisioning_profiles_base64_array[$i]}
+        #       echo -n "${provisioning_profile_base64}" | base64 --decode --output "${RUNNER_TEMP}/${i}.mobileprovision"
+        #       ios_provisioning_profile_urls_array+=("file://${RUNNER_TEMP}/${i}.mobileprovision")
+        #   done
+        # fi
 
         # shellcheck disable=SC2206
         args+=("--ios-provisioning-profile-urls" ${ios_provisioning_profile_urls_array[@]})
