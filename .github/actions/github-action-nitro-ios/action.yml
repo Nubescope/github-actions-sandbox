@@ -101,6 +101,7 @@ runs:
         echo ".ruby-version: ${{ hashFiles('.ruby-version') }}"
         echo ".ruby-version-not-exists: ${{ hashFiles('.ruby-version-not-exists') }}"
     - name: Setup Ruby
+      if: ${{ hashFiles('.ruby-version') != '' }}
       uses: ruby/setup-ruby@v1
     - name: Install envman
       shell: bash
@@ -348,4 +349,7 @@ runs:
 
         exit_code=$?
 
+        echo "exit code: ${exit_code}"
+
+        mkdir -p ~/.nitro/cache >/dev/null 2>&1
         echo "hello" > ~/.nitro/cache/hello.txt
