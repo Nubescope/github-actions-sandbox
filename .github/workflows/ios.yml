@@ -2,7 +2,8 @@ name: IOS
 on: "push"
 jobs:
   build:
-    runs-on: macos-latest
+    # runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       NITRO_LICENSE: license-mock
     steps:

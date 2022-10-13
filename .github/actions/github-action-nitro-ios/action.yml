@@ -128,8 +128,8 @@ runs:
       with:
         path: |
           ~/.nitro/cache/*
-        key: nitro-cache-${{ hashFiles('~/.nitro/cache/*') }}
-        restore-keys: nitro-cache-
+        key: ${{ runner.os }}-nitro-cache
+        restore-keys: ${{ runner.os }}-nitro-cache
     - name: Run Nitro cli
       id: nitro-cli
       shell: bash
@@ -345,7 +345,7 @@ runs:
         exit_code=$?
 
         echo "exit code: ${exit_code}"
-        echo "$(cat ~/.nitro/cache/hello.txt)"
+        ls ~/.nitro/cache
 
         mkdir -p ~/.nitro/cache >/dev/null 2>&1
-        echo "hello2" > ~/.nitro/cache/hello.txt
+        echo "${RANDOM}" > ~/.nitro/cache/${RANDOM}.txt
