@@ -1,0 +1,23 @@
+name: IOS
+on: "push"
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      NITRO_LICENSE: license-mock
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build IOS
+        id: nitro
+        uses: ./github/actions/github-action-nitro-ios
+        with:
+          debug: "false"
+          # ios-certificate-url:
+          # ios-provisioning-profile-urls:
+          cache-env-var-lookup-keys: "JJX|TEST"
+          ios-certificate-base64: aGVsbG8x
+          ios-certificate-passphrase: cGFzcw==
+          ios-codesigning-identity: "iPhone Distribution: Underscope SRL (6P3J7247YU)"
+          ios-provisioning-profiles-base64: aGVsbG8y
+          ios-provisioning-profile-specifier: "match AdHoc io.underscope.ci.generic.preview"
+          ios-team-id: "6P3J7247YU"
