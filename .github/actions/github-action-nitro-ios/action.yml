@@ -345,7 +345,7 @@ runs:
         exit_code=$?
 
         echo "exit code: ${exit_code}"
-        ls ~/.nitro/cache
+        echo "$(ls ~/.nitro/cache)"
 
         mkdir -p ~/.nitro/cache >/dev/null 2>&1
         echo "${RANDOM}" > ~/.nitro/cache/${RANDOM}.txt
