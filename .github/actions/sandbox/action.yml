@@ -28,8 +28,8 @@ runs:
         echo "$(ls ~/.nitro/cache)"
 
         # echo contents
-        echo "file content: ${FILE_CONTENT}"
-        file_name=~/.nitro/cache/$(echo ${FILE_CONTENT} | md5sum | awk '{print $1}').txt
+        echo "file content: ${{ inputs.file-content }}"
+        file_name=~/.nitro/cache/$(echo ${{ inputs.file-content }} | md5sum | awk '{print $1}').txt
 
         echo "writing to: ${file_name}"
-        echo "${FILE_CONTENT}" > $file_name
+        echo "${{ inputs.file-content }}" > $file_name
