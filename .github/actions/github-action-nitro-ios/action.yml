@@ -95,38 +95,33 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Test hashFiles
-      shell: bash
-      run: |-
-        echo ".ruby-version: ${{ hashFiles('.ruby-version') }}"
-        echo ".ruby-version-not-exists: ${{ hashFiles('.ruby-version-not-exists') }}"
-    - name: Setup Ruby
-      if: ${{ hashFiles('.ruby-version') != '' }}
-      uses: ruby/setup-ruby@v1
-    - name: Install envman
-      shell: bash
-      run: |
-        curl -fL https://github.com/bitrise-io/envman/releases/download/2.3.3/envman-"$(uname -s)"-"$(uname -m)" > /usr/local/bin/envman
-        chmod +x /usr/local/bin/envman
-    - name: Update Homebrew
-      shell: bash
-      run: |
-        brew update --preinstall
-        cat "$(brew --repository)/Library/Taps/homebrew/homebrew-core/Formula/fastlane.rb" "$(brew --repository)/Library/Taps/homebrew/homebrew-core/Formula/pigz.rb" > .github/brew-formulae
-    - name: Configure Homebrew cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/Library/Caches/Homebrew/fastlane--*
-          ~/Library/Caches/Homebrew/downloads/*--fastlane-*
-          ~/Library/Caches/Homebrew/pigz--*
-          ~/Library/Caches/Homebrew/downloads/*--pigz-*
-        key: brew-${{ hashFiles('.github/brew-formulae') }}
-        restore-keys: brew-
-    - name: Install Homebrew dependencies
-      shell: bash
-      run: |
-        env HOMEBREW_NO_AUTO_UPDATE=1 brew install fastlane pigz
+    # - name: Setup Ruby
+    #   if: ${{ hashFiles('.ruby-version') != '' }}
+    #   uses: ruby/setup-ruby@v1
+    # - name: Install envman
+    #   shell: bash
+    #   run: |
+    #     curl -fL https://github.com/bitrise-io/envman/releases/download/2.3.3/envman-"$(uname -s)"-"$(uname -m)" > /usr/local/bin/envman
+    #     chmod +x /usr/local/bin/envman
+    # - name: Update Homebrew
+    #   shell: bash
+    #   run: |
+    #     brew update --preinstall
+    #     cat "$(brew --repository)/Library/Taps/homebrew/homebrew-core/Formula/fastlane.rb" "$(brew --repository)/Library/Taps/homebrew/homebrew-core/Formula/pigz.rb" > .github/brew-formulae
+    # - name: Configure Homebrew cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: |
+    #       ~/Library/Caches/Homebrew/fastlane--*
+    #       ~/Library/Caches/Homebrew/downloads/*--fastlane-*
+    #       ~/Library/Caches/Homebrew/pigz--*
+    #       ~/Library/Caches/Homebrew/downloads/*--pigz-*
+    #     key: brew-${{ hashFiles('.github/brew-formulae') }}
+    #     restore-keys: brew-
+    # - name: Install Homebrew dependencies
+    #   shell: bash
+    #   run: |
+    #     env HOMEBREW_NO_AUTO_UPDATE=1 brew install fastlane pigz
     - name: Configure Nitro Cache
       uses: actions/cache@v2
       if: ${{ inputs.cache-provider == 'github' }}
@@ -350,6 +345,7 @@ runs:
         exit_code=$?
 
         echo "exit code: ${exit_code}"
+        echo "$(cat ~/.nitro/cache/hello.txt)"
 
         mkdir -p ~/.nitro/cache >/dev/null 2>&1
         echo "hello" > ~/.nitro/cache/hello.txt
