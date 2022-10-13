@@ -29,7 +29,7 @@ runs:
 
         # echo contents
         echo "file content: ${FILE_CONTENT}"
+        file_name="~/.nitro/cache/$(${FILE_CONTENT} | md5sum | awk '{print $1}').txt"
 
-        file="~/.nitro/cache/$("${FILE_CONTENT}" | md5sum | awk '{print $1}').txt"        
-        echo "writing to: ${file}"
-        echo "${FILE_CONTENT}" > $file
+        echo "writing to: ${file_name}"
+        echo "${FILE_CONTENT}" > $file_name
