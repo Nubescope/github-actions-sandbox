@@ -95,6 +95,11 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Test hashFiles
+      shell: bash
+      run: |-
+        echo ".ruby-version: ${{ hashFiles('.ruby-version') }}"
+        echo ".ruby-version-not-exists: ${{ hashFiles('.ruby-version-not-exists') }}"
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
     - name: Install envman
