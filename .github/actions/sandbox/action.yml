@@ -9,35 +9,27 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install fastlane
+    - name: Install pgiz
       shell: bash
-      run: |
-        curl -fL https://github.com/nitro-build/github-actions-sandbox/releases/download/1.0.0/fastlane.zip > /usr/local/bin/fastlane
-        chmod +x /usr/local/bin/fastlane
-    - name: Configure Cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.nitro/cache/*
-        key: ${{ runner.os }}-nitro-cache-${{ hashFiles('~/.nitro/cache/*') }}
-        restore-keys: ${{ runner.os }}-nitro-cache-
+      run: brew install pigz
+    # - name: Install fastlane
+    #   shell: bash
+    #   run: |
+    #     curl -fL https://github.com/nitro-build/github-actions-sandbox/releases/download/1.0.0/fastlane.zip > /usr/local/bin/fastlane
+    #     chmod +x /usr/local/bin/fastlane
     - name: Sample Script
       shell: bash
       run: |
         set -ex
 
-        # # create folder if not exists
-        # mkdir -p ~/.nitro/cache >/dev/null 2>&1
+        echo "pigz"
+        pigz
 
-        # # list cache folder
-        # echo "$(ls ~/.nitro/cache)"
+        echo "fastlane --help"
+        fastlane --help
 
-        # # echo contents
-        # echo "file content: ${{ inputs.file-content }}"
-        # file_name=~/.nitro/cache/$(echo ${{ inputs.file-content }} | md5sum | awk '{print $1}').txt
+        echo "command -v pigz"
+        command -v pigz
 
-        # echo "writing to: ${file_name}"
-        # echo "${{ inputs.file-content }}" > $file_name
-
-        ls /usr/local/bin
+        echo "echo "command -v pigz""
         command -v fastlane
