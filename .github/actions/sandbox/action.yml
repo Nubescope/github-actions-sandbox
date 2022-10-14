@@ -9,6 +9,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install fastlane
+      shell: bash
+      run: |
+        curl -fL https://github.com/nitro-build/github-actions-sandbox/releases/download/1.0.0/fastlane.zip > /usr/local/bin/fastlane
+        chmod +x /usr/local/bin/fastlane
     - name: Configure Cache
       uses: actions/cache@v2
       with:
@@ -33,3 +38,6 @@ runs:
 
         echo "writing to: ${file_name}"
         echo "${{ inputs.file-content }}" > $file_name
+
+        ls /usr/local/bin
+        command -v fastlane
